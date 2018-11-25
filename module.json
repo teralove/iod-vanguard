@@ -1,0 +1,7 @@
+{
+	"disableAutoUpdate": false,
+	"options": {
+		"niceName": "IOD-Vanguard"
+	},
+	"servers": ["https://raw.githubusercontent.com/teralove/iod-vanguard/master/"]
+}
