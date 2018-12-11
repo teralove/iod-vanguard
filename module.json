@@ -1,7 +1,11 @@
 {
-	"disableAutoUpdate": false,
-	"options": {
-		"niceName": "IOD-Vanguard"
-	},
-	"servers": ["https://raw.githubusercontent.com/teralove/iod-vanguard/master/"]
+    "disableAutoUpdate": false,
+    "name": "iod-vanguard",
+    "author": "teralove",
+    "description": "Farm IOD bam helper",
+    "options": {
+        "niceName": "IOD Vanguard"
+    },
+    "servers": ["https://raw.githubusercontent.com/teralove/iod-vanguard/master/"],
+    "supportUrl": "https://github.com/teralove/iod-vanguard/issues"  
 }

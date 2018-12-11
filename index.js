@@ -2,7 +2,6 @@ String.prototype.clr = function (hexColor) { return `<font color="#${hexColor}">
 const config = require('./config.js');
     
 module.exports = function IodVanguard(mod) {
-	const command = mod.command || mod.require.command;
     const questIds = [92321, 92322, 92323];
     const slot = 3;
     
@@ -20,7 +19,7 @@ module.exports = function IodVanguard(mod) {
     
     mod.hook('C_EQUIP_ITEM', 2, (event) => {
         if (!enabled) return;
-        if (itemUnequip && event.gameId.equals(itemUnequip.cid)) itemEquip = event;
+        if (itemUnequip && event.gameId == (itemUnequip.cid)) itemEquip = event;
 	});
     
     mod.hook('C_UNEQUIP_ITEM', 1, (event) => {
@@ -49,7 +48,7 @@ module.exports = function IodVanguard(mod) {
         // Module is done if targetted vanguard is found
         let quest = event.quests.find(p => p.id === config.questId);
         if (quest) {
-            command.message("Ready!".clr('56B4E9'));
+            mod.command.message("Ready!".clr('56B4E9'));
             searchStart = false;
             return;
         }
@@ -57,14 +56,14 @@ module.exports = function IodVanguard(mod) {
         // Skip routine if no iod quest can be found
         quest = event.quests.find(p => questIds.includes(p.id));
         if (!quest && event.quests.length > 9) {
-            //command.message("Skipping...!".clr('FFF4E9'));
+            //mod.command.message("Skipping...!".clr('FFF4E9'));
             return;
         }
         
         // Reset the vanguard requests by re-equipping gear
         if (itemEquip && itemUnequip)
         {            
-            if (!searchStart) command.message("Searching...");    
+            if (!searchStart) mod.command.message("Searching...");    
             searching = true;
             searchStart = true;
             
@@ -85,21 +84,22 @@ module.exports = function IodVanguard(mod) {
         } 
         else 
         {
-            command.message('Unequip and reequip your chest.'.clr('E69F00') );
+            mod.command.message('Unequip and reequip your chest.'.clr('E69F00') );
         }
         
     })
     
     
-    command.add(['iodbam', 'iodbams', 'iodvanguard', 'iodvanguards'], (p1)=> {
+    mod.command.add(['iodbam', 'iodbams', 'iodvanguard', 'iodvanguards'], (p1)=> {
+        if (p1) p1 = p1.toLowerCase();
         if (p1 == null) {
             enabled = !enabled;
-        } else if (p1.toLowerCase() === 'off') {
+        } else if (p1 === 'off') {
             enabled = false;
-        } else if (p1.toLowerCase() === 'on') {
+        } else if (p1 === 'on') {
             enabled = true;
         }
-        command.message(enabled ? "Enabled" : "Disabled");
+        mod.command.message(enabled ? "Enabled" : "Disabled");
     });
     
 }
